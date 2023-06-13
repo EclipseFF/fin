@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.1
-// source: contact.proto
+// source: video.proto
 
 package contact
 
@@ -173,5 +173,5 @@ var ContactService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "contact.proto",
+	Metadata: "video.proto",
 }

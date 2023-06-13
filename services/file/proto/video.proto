@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package contact;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./;video";
+
+service ContactService {
+  rpc DownloadVideo (DownloadVideoRequest) returns (DownloadVideoResponse) {}
+  rpc UploadVideo (UploadVideoRequest) returns (UploadVideoResponse) {}
+  rpc DeleteVideo (DeleteVideoRequest) returns (DeleteVideoResponse) {}
+}
+
+message DownloadVideoRequest {
+  string name = 1;
+}
+
+message DownloadVideoResponse {
+    Video response = 1;
+}
+
+message Video {
+  string name = 1;
+  string bytes = 2;
+}
+
+message UploadVideoRequest {
+  Video request = 1;
+}
+
+message UploadVideoResponse {
+  Video response = 1;
+}
+
+message DeleteVideoRequest {
+  string name = 1;
+}
+
+message DeleteVideoResponse {
+  string name = 1;
+}
