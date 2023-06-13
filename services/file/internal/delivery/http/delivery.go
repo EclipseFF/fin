@@ -1,12 +1,23 @@
 package http
 
 import (
-	"architecture_go/services/api/internal/delivery/grpc"
-	"architecture_go/services/api/internal/useCase"
 	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
+
+	"architecture_go/services/contact/internal/useCase"
 )
+
+// @title slurm contact service on clean architecture
+// @version 1.0
+// @description contact service on clean architecture
+// @license.name kolyadkons
+
+// @contact.name API Support
+// @contact.email kolyadkons@gmail.com
+
+// @BasePath /
 
 func init() {
 	viper.SetConfigName(".env")
@@ -18,17 +29,19 @@ func init() {
 }
 
 type Delivery struct {
-	ucRequest    useCase.Request
-	router       *gin.Engine
-	grpcDelivery grpc.Delivery
-	options      Options
+	ucContact useCase.Contact
+	ucGroup   useCase.Group
+	router    *gin.Engine
+
+	options Options
 }
 
 type Options struct{}
 
-func New( /*ucRequest useCase.Request, */ options Options) *Delivery {
+func New(ucContact useCase.Contact, ucGroup useCase.Group, options Options) *Delivery {
 	var d = &Delivery{
-		/*ucRequest: ucRequest,*/
+		ucContact: ucContact,
+		ucGroup:   ucGroup,
 	}
 
 	d.SetOptions(options)
@@ -45,4 +58,8 @@ func (d *Delivery) SetOptions(options Options) {
 
 func (d *Delivery) Run() error {
 	return d.router.Run(fmt.Sprintf(":%d", uint16(viper.GetUint("HTTP_PORT"))))
+}
+
+func checkAuth(c *gin.Context) {
+	c.Next()
 }
