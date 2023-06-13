@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package admin;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./;admin";
+
+service AdminPanelService {
+  rpc CreateGroup (CreateGroupRequest) returns (CreateGroupResponse) {}
+  rpc GetVideos (GetVideosRequest) returns (GetVideosResponse) {}
+}
+
+message CreateGroupRequest {
+  string name = 1;
+}
+
+message GroupResponse {
+  string id = 1;
+  string name = 2;
+
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp modified_at = 4;
+}
+
+message CreateGroupResponse {
+  GroupResponse response = 1;
+}
+
+message GetVideosRequest{
+  string id = 1;
+  string name = 2;
+}
+
+message Video {
+  string id = 1;
+  string name = 2;
+}
+
+message GetVideosResponse {
+  repeated Video videos = 1;
+}

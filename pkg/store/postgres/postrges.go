@@ -19,35 +19,35 @@ func init() {
 	}
 }
 
-//  Env to pg params
-// 	"PGHOST":               "host",
-// 	"PGPORT":               "port",
-// 	"PGDATABASE":           "database",
-// 	"PGUSER":               "user",
-// 	"PGPASSWORD":           "password",
-// 	"PGPASSFILE":           "passfile",
-// 	"PGAPPNAME":            "application_name",
-// 	"PGCONNECT_TIMEOUT":    "connect_timeout",
-// 	"PGSSLMODE":            "sslmode",
-// 	"PGSSLKEY":             "sslkey",
-// 	"PGSSLCERT":            "sslcert",
-// 	"PGSSLROOTCERT":        "sslrootcert",
-// 	"PGTARGETSESSIONATTRS": "target_session_attrs",
-// 	"PGSERVICE":            "service",
-// 	"PGSERVICEFILE":        "servicefile",
+//	 Env to pg params
+//		"PGHOST":               "host",
+//		"PGPORT":               "port",
+//		"PGDATABASE":           "database",
+//		"PGUSER":               "user",
+//		"PGPASSWORD":           "password",
+//		"PGPASSFILE":           "passfile",
+//		"PGAPPNAME":            "application_name",
+//		"PGCONNECT_TIMEOUT":    "connect_timeout",
+//		"PGSSLMODE":            "sslmode",
+//		"PGSSLKEY":             "sslkey",
+//		"PGSSLCERT":            "sslcert",
+//		"PGSSLROOTCERT":        "sslrootcert",
+//		"PGTARGETSESSIONATTRS": "target_session_attrs",
+//		"PGSERVICE":            "service",
+//		"PGSERVICEFILE":        "servicefile",
 func initDefaultEnv() error {
 	if len(os.Getenv("PGHOST")) == 0 {
-		if err := os.Setenv("PGHOST", "postgres"); err != nil {
+		if err := os.Setenv("PGHOST", "localhost"); err != nil {
 			return errors.WithStack(err)
 		}
 	}
 	if len(os.Getenv("PGPORT")) == 0 {
-		if err := os.Setenv("PGPORT", "5838"); err != nil {
+		if err := os.Setenv("PGPORT", "5432"); err != nil {
 			return errors.WithStack(err)
 		}
 	}
 	if len(os.Getenv("PGDATABASE")) == 0 {
-		if err := os.Setenv("PGDATABASE", "postgres"); err != nil {
+		if err := os.Setenv("PGDATABASE", "final"); err != nil {
 			return errors.WithStack(err)
 		}
 	}
@@ -57,7 +57,7 @@ func initDefaultEnv() error {
 		}
 	}
 	if len(os.Getenv("PGPASSWORD")) == 0 {
-		if err := os.Setenv("PGPASSWORD", "password"); err != nil {
+		if err := os.Setenv("PGPASSWORD", "1"); err != nil {
 			return errors.WithStack(err)
 		}
 	}
