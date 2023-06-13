@@ -46,15 +46,6 @@ func main() {
 		}
 	}()
 
-	// repoContact, err:= repositoryContact.New(conn.Pool, repositoryContact.Options{})
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// repoGroup, err:= repositoryGroup.New(conn.Pool, repoContact, repositoryGroup.Options{})
-	// if err != nil {
-	// 	panic(err)
-	// }
-
 	repoStorage, err := repositoryStorage.New(conn.Pool, repositoryStorage.Options{})
 	if err != nil {
 		panic(err)
