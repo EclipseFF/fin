@@ -11,11 +11,7 @@ import (
 	"architecture_go/pkg/tracing"
 	"architecture_go/pkg/type/context"
 	log "architecture_go/pkg/type/logger"
-	deliveryGrpc "architecture_go/services/contact/internal/delivery/grpc"
-	deliveryHttp "architecture_go/services/contact/internal/delivery/http"
-
-	useCaseContact "architecture_go/services/contact/internal/useCase/contact"
-	useCaseGroup "architecture_go/services/contact/internal/useCase/group"
+	deliveryGrpc "architecture_go/services/file/internal/delivery/grpc"
 )
 
 func init() {
@@ -41,18 +37,14 @@ func main() {
 		panic(err)
 	}
 	var (
-		ucContact = useCaseContact.New(repoStorage, useCaseContact.Options{})
-		// ucGroup      = useCaseGroup.New(repoGroup, useCaseGroup.Options{})
-		ucGroup      = useCaseGroup.New(repoStorage, useCaseGroup.Options{})
-		_            = deliveryGrpc.New(ucContact, ucGroup, deliveryGrpc.Options{})
-		listenerHttp = deliveryHttp.New(ucContact, ucGroup, deliveryHttp.Options{})
+		_ = deliveryGrpc.New( /*ucContact, ucGroup, */ deliveryGrpc.Options{})
 	)
 
 	go func() {
 		fmt.Printf("service started successfully on http port: %d", viper.GetUint("HTTP_PORT"))
-		if err = listenerHttp.Run(); err != nil {
-			panic(err)
-		}
+		/*		if err = listenerHttp.Run(); err != nil {
+				panic(err)
+			}*/
 	}()
 
 	signalCh := make(chan os.Signal, 1)
