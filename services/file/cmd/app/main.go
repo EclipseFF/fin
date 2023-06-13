@@ -37,7 +37,7 @@ func main() {
 		panic(err)
 	}
 	var (
-		_ = deliveryGrpc.New( /*ucContact, ucGroup, */ deliveryGrpc.Options{})
+		_ = deliveryGrpc.New(deliveryGrpc.Options{})
 	)
 
 	go func() {

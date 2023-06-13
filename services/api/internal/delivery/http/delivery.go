@@ -26,10 +26,8 @@ type Delivery struct {
 
 type Options struct{}
 
-func New( /*ucRequest useCase.Request, */ options Options) *Delivery {
-	var d = &Delivery{
-		/*ucRequest: ucRequest,*/
-	}
+func New(options Options) *Delivery {
+	var d = &Delivery{}
 
 	d.SetOptions(options)
 

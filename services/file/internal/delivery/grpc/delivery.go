@@ -8,7 +8,7 @@ type Delivery struct {
 
 type Options struct{}
 
-func New( /*ucContact useCase.Contact, ucGroup useCase.Group, */ o Options) *Delivery {
+func New(o Options) *Delivery {
 	var d = &Delivery{
 		route: routeGuideServer{},
 	}

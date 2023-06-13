@@ -18,11 +18,6 @@ func main() {
 
 	var listener = delivery.New()
 
-	/*	var (
-		usRequest
-		listenerHttp = deliveryHttp.New()
-		listenerGrpc = deliveryGrpc.New()
-	)*/
 	go func() {
 		fmt.Printf("service started successfully on http port: %d", viper.GetUint("HTTP_PORT"))
 		if err := listener.ListenerHttp.Run(); err != nil {
