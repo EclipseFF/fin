@@ -5,10 +5,16 @@ import (
 	"architecture_go/pkg/tracing"
 	"architecture_go/pkg/type/context"
 	log "architecture_go/pkg/type/logger"
+	deliveryGrpc "architecture_go/services/admin/internal/delivery/grpc"
+	deliveryHttp "architecture_go/services/admin/internal/delivery/http"
 	repositoryStorage "architecture_go/services/admin/internal/repository/storage/postgres"
 	useCaseGroup "architecture_go/services/admin/internal/useCase/group"
 	useCaseVideo "architecture_go/services/admin/internal/useCase/video"
+	"fmt"
 	"github.com/spf13/viper"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 func init() {
@@ -37,13 +43,25 @@ func main() {
 	}()
 
 	repoStorage, err := repositoryStorage.New(conn.Pool, repositoryStorage.Options{})
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 	var (
-		ucVideo =  useCaseVideo.New(repoStorage, useCaseVideo.Options{})
-		ucGroup =  useCaseGroup.New(repoStorage, useCaseGroup.Options{})
-		_ =
+		ucVideo      = useCaseVideo.New(repoStorage, useCaseVideo.Options{})
+		ucGroup      = useCaseGroup.New(repoStorage, useCaseGroup.Options{})
+		_            = deliveryGrpc.New(ucVideo, ucGroup, deliveryGrpc.Options)
+		listenerHttp = deliveryHttp.New(ucVideo, ucGroup, deliveryHttp.Options{})
 	)
+
+	go func() {
+		fmt.Printf("service started successfully on http port: %d", viper.GetUint("HTTP_PORT"))
+		if err = listenerHttp.Run(); err != nil {
+			panic(err)
+		}
+	}()
+
+	signalCh := make(chan os.Signal, 1)
+	signal.Notify(signalCh, syscall.SIGINT, syscall.SIGTERM)
+	<-signalCh
 
 }

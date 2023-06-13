@@ -38,7 +38,7 @@ type Delivery struct {
 
 type Options struct{}
 
-func New(ucContact *interface{}, ucGroup *interface{}, options Options) *Delivery {
+func New(ucContact useCase.Contact, ucGroup useCase.Group, options Options) *Delivery {
 	var d = &Delivery{
 		ucContact: ucContact,
 		ucGroup:   ucGroup,
