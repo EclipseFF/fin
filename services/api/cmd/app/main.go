@@ -1,10 +1,9 @@
 package main
 
 import (
+	"architecture_go/services/api/internal/delivery"
 	"fmt"
 	"github.com/spf13/viper"
-
-	deliveryHttp "architecture_go/services/api/internal/delivery/http"
 )
 
 func init() {
@@ -17,14 +16,19 @@ func init() {
 
 func main() {
 
-	var (
-		listenerHttp = deliveryHttp.New
-	)
+	var listener = delivery.New()
 
+	/*	var (
+		usRequest
+		listenerHttp = deliveryHttp.New()
+		listenerGrpc = deliveryGrpc.New()
+	)*/
 	go func() {
 		fmt.Printf("service started successfully on http port: %d", viper.GetUint("HTTP_PORT"))
-		if err = listenerHttp.Run(); err != nil {
+		if err := listener.ListenerHttp.Run(); err != nil {
 			panic(err)
 		}
+
 	}()
+
 }

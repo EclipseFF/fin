@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package request;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./;contact";
+
+service RequestService {
+  rpc CreateGroup (CreateGroupRequest) returns (CreateGroupResponse) {}
+  rpc AddVideo (AddVideoRequest) returns (AddVideoResponse) {}
+  rpc ShowGroups (GroupsQuery) returns (stream GroupsResponse) {}
+  rpc RemoveVideo (RemoveVideoRequest) returns (RemoveVideoResponse) {}
+  rpc Login (LoginRequest) returns (CreateLoginResponse) {}
+  rpc DeleteGroup (DeleteGroupRequest) returns (DeleteGroupResponse) {}
+}
+
+message CreateGroupRequest {
+  string code = 1;
+}
+
+message GroupResponse {
+  string code = 1;
+}
+
+message CreateGroupResponse {
+  GroupResponse response = 1;
+}
+
+message AddVideoRequest {
+  string code = 1;
+  string bytes = 2;
+}
+
+message VideoResponse {
+  string id = 1;
+}
+
+message AddVideoResponse {
+  VideoResponse response = 1;
+}
+
+message DeleteGroupRequest {
+  string id = 1;
+}
+
+message DeleteGroupResponse {
+  GroupResponse response = 1;
+}
+
+message LoginRequest {
+  string code = 1;
+}
+
+message CreateLoginResponse {
+  GroupResponse response = 1;
+}
+
+message GroupsQuery {
+}
+
+message GroupsResponse {
+  repeated Item items = 1;
+}
+
+message Item {
+  string code = 1;
+}
+
+message RemoveVideoRequest {
+  string id = 1;
+}
+
+message RemoveVideoResponse {
+  VideoResponse response = 1;
+}

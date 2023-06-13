@@ -46,7 +46,8 @@ func StartSpanWithHeader(header *http.Header, operationName, method, path string
 
 // StartSpanWithParent will start a new span with a parent span.
 // example:
-//      span:= StartSpanWithParent(c.Get("tracing-context"),
+//
+//	span:= StartSpanWithParent(c.Get("tracing-context"),
 func StartSpanWithParent(parent opentracing.SpanContext, operationName, method, path string) opentracing.Span {
 	options := []opentracing.StartSpanOption{
 		opentracing.Tag{Key: ext.SpanKindRPCServer.Key, Value: ext.SpanKindRPCServer.Value},

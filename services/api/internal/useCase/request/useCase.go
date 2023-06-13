@@ -3,8 +3,6 @@ package contact
 import (
 	"go.uber.org/zap"
 
-	"architecture_go/services/contact/internal/useCase/adapters/storage"
-
 	log "architecture_go/pkg/type/logger"
 )
 

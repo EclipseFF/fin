@@ -1,27 +1,34 @@
 package grpc
 
 import (
-	contact "architecture_go/services/contact/internal/delivery/grpc/interface"
-	"architecture_go/services/contact/internal/useCase"
+	contact "architecture_go/services/api/internal/delivery/grpc/interface"
+	"architecture_go/services/api/internal/useCase"
+	"google.golang.org/grpc"
 )
 
 type Delivery struct {
-	contact.UnimplementedContactServiceServer
-	ucContact useCase.Contact
-	ucGroup   useCase.Group
+	ucRequest   useCase.Request
+	clientAdmin contact.RequestServiceClient
 
 	options Options
 }
 
 type Options struct{}
 
-func New(ucContact useCase.Contact, ucGroup useCase.Group, o Options) *Delivery {
+func New( /*ucRequest useCase.Request, */ options Options) *Delivery {
+
+	conn, err := grpc.Dial("localhost:5500")
+	if err != nil {
+		return nil
+	}
+	defer conn.Close()
+	client := contact.NewRequestServiceClient(conn)
 	var d = &Delivery{
-		ucContact: ucContact,
-		ucGroup:   ucGroup,
+		/*ucRequest: ucRequest,*/
+		clientAdmin: client,
 	}
 
-	d.SetOptions(o)
+	d.SetOptions(options)
 	return d
 }
 
