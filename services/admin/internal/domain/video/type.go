@@ -15,26 +15,18 @@ type Video struct {
 	id        uint
 	createdAt time.Time
 
-	group group.Group
-
 	name name.VideoName
 }
 
 func NewWithID(
 	id uint,
 	createdAt time.Time,
-	group group.Group,
 	name name.VideoName,
 ) (*Video, error) {
-
-	if group.IsEmpty() {
-		return nil, ErrGroupRequired
-	}
 
 	return &Video{
 		id:        id,
 		createdAt: createdAt.UTC(),
-		group:     group,
 		name:      name,
 	}, nil
 }
@@ -53,7 +45,6 @@ func New(
 	return &Video{
 		id:        id,
 		createdAt: timeNow,
-		group:     group,
 		name:      name,
 	}, nil
 }
@@ -64,10 +55,6 @@ func (v Video) ID() uint {
 
 func (v Video) CreatedAt() time.Time {
 	return v.createdAt
-}
-
-func (v Video) Group() group.Group {
-	return v.group
 }
 
 func (v Video) Name() name.VideoName {

@@ -3,7 +3,7 @@ package storage
 import (
 	"architecture_go/pkg/type/context"
 	"architecture_go/pkg/type/queryParameter"
-	"architecture_go/services/admin/internal/domain/group/name"
+	"architecture_go/services/admin/internal/domain/group"
 	"architecture_go/services/admin/internal/domain/video"
 )
 
@@ -13,7 +13,7 @@ type Storage interface {
 }
 
 type Video interface {
-	DeleteVideo(ctx context.Context, videos ...*video.Video) ([]*video.Video, error)
+	DeleteVideo(ctx context.Context, ID uint) error
 
 	VideoReader
 }
@@ -24,8 +24,7 @@ type VideoReader interface {
 }
 
 type Group interface {
-	CreateGroup(ctx context.Context, group *name.GroupName) (*name.GroupName, error)
-	UpdateGroup(ctx context.Context, ID uint, updateFn func(group *name.GroupName) (*name.GroupName, error))
+	CreateGroup(ctx context.Context, group *group.Group) (*group.Group, error)
 	DeleteGroup(ctx context.Context, ID uint) error
 
 	GroupReader
@@ -33,8 +32,7 @@ type Group interface {
 }
 
 type GroupReader interface {
-	ListGroup(ctx context.Context, parameter queryParameter.QueryParameter) ([]*name.GroupName, error)
-	ReadGroupByID(ctx context.Context, ID uint) *name.GroupName
+	ListGroup(ctx context.Context, parameter queryParameter.QueryParameter) ([]*group.Group, error)
 }
 
 type VideosInGroup interface {
